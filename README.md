@@ -142,8 +142,40 @@ backend/
 ├── package.json
 └── ...
 </code></pre>
+<h2>Backend Explanation</h2>
 
-<h2>API Endpoints</h2>
+<h3>index.js</h3>
+<p><strong>Purpose:</strong> Main entry point of the backend server.</p>
+<p><strong>Data Flow:</strong> Sets up Express server, connects to MongoDB, and configures middleware (CORS, body-parser).</p>
+<p><strong>Routing:</strong> Routes different API endpoints to corresponding route files (e.g., /AddBooks to books.js).</p>
+
+<h3>Route Files</h3>
+
+<h4>Book.js</h4>
+<p><strong>Purpose:</strong> Manages book-related operations.</p>
+<p><strong>Data Flow:</strong> Handles GET and POST requests for book data, interacts with <code>BookModel</code> to fetch or store book information.</p>
+
+<h4>GenerateBill.js</h4>
+<p><strong>Purpose:</strong> Manages bill generation.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to generate a bill based on purchase data, interacts with <code>PurchaseBook</code> and <code>BookModel</code>.</p>
+
+<h4>Publisher.js</h4>
+<p><strong>Purpose:</strong> Manages publisher-related operations.</p>
+<p><strong>Data Flow:</strong> Handles GET and POST requests for publisher data, interacts with <code>publisherModel</code> to fetch or store publisher information.</p>
+
+<h4>PurchaseBook.js</h4>
+<p><strong>Purpose:</strong> Manages book purchase transactions.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to record book purchases, interacts with <code>BookModel</code> and <code>PurchaseBook</code> to update inventory and save purchase details.</p>
+
+<h4>ReturnBook.js</h4>
+<p><strong>Purpose:</strong> Manages the return of books.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to record book returns, updates <code>PurchaseBook</code> and <code>BookModel</code> to reflect returned books.</p>
+
+<h4>UpdateBook.js</h4>
+<p><strong>Purpose:</strong> Manages updating book information.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to update book details, interacts with <code>BookModel</code> to update inventory.</p>
+
+<h2>Router</h2>
 
 <h3>Books</h3>
 <ul>
@@ -175,7 +207,15 @@ backend/
 
 <h2>Models</h2>
 <p>The models define the schema for the MongoDB collections used in this project.</p>
-
+<h4>BooksModel.js</h4>
+    <p><strong>Purpose:</strong> Defines the schema for storing book data in MongoDB.</p>
+    <p><strong>Schema:</strong> Includes fields like Name, Grade, Quantity, PurchaseRate, SellRate, TotalQuantity, PublisherId.</p>
+    <h4>PublisherModel.js</h4>
+    <p><strong>Purpose:</strong> Defines the schema for storing publisher data in MongoDB.</p>
+    <p><strong>Schema:</strong> Includes fields like PublisherName and PublisherCell.</p>
+    <h4>PurchaseBookModel.js</h4>
+    <p><strong>Purpose:</strong> Defines the schema for storing purchase transactions in MongoDB.</p>
+    <p><strong>Schema:</strong> Includes fields like parentName, studentName, bookId, and bookQuantity.</p>
 <h3>BookModel.js</h3>
 <pre><code>
 import mongoose from 'mongoose'
