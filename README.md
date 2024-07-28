@@ -145,116 +145,66 @@ backend/
 <h2>Backend Explanation</h2>
 
 <h3>index.js</h3>
-<p><strong>Purpose:</strong> Main entry point of the backend server.</p>
+<p><strong>Purpose:</strong> Main entry point of the backend server they receive data from axios and send it to correspnd routes files.</p>
 <p><strong>Data Flow:</strong> Sets up Express server, connects to MongoDB, and configures middleware (CORS, body-parser).</p>
 <p><strong>Routing:</strong> Routes different API endpoints to corresponding route files (e.g., /AddBooks to books.js).</p>
 
 <h3>Route Files</h3>
 
 <h4>Book.js</h4>
-<p><strong>Purpose:</strong> Manages book-related operations.</p>
-<p><strong>Data Flow:</strong> Handles GET and POST requests for book data, interacts with <code>BookModel</code> to fetch or store book information.</p>
-
-<h4>GenerateBill.js</h4>
-<p><strong>Purpose:</strong> Manages bill generation.</p>
-<p><strong>Data Flow:</strong> Handles POST requests to generate a bill based on purchase data, interacts with <code>PurchaseBook</code> and <code>BookModel</code>.</p>
-
-<h4>Publisher.js</h4>
-<p><strong>Purpose:</strong> Manages publisher-related operations.</p>
-<p><strong>Data Flow:</strong> Handles GET and POST requests for publisher data, interacts with <code>publisherModel</code> to fetch or store publisher information.</p>
-
-<h4>PurchaseBook.js</h4>
-<p><strong>Purpose:</strong> Manages book purchase transactions.</p>
-<p><strong>Data Flow:</strong> Handles POST requests to record book purchases, interacts with <code>BookModel</code> and <code>PurchaseBook</code> to update inventory and save purchase details.</p>
-
-<h4>ReturnBook.js</h4>
-<p><strong>Purpose:</strong> Manages the return of books.</p>
-<p><strong>Data Flow:</strong> Handles POST requests to record book returns, updates <code>PurchaseBook</code> and <code>BookModel</code> to reflect returned books.</p>
-
-<h4>UpdateBook.js</h4>
-<p><strong>Purpose:</strong> Manages updating book information.</p>
-<p><strong>Data Flow:</strong> Handles POST requests to update book details, interacts with <code>BookModel</code> to update inventory.</p>
-
-<h2>Router</h2>
-
-<h3>Books</h3>
+<p><strong>Purpose:</strong> Manages book-related operations(ViewBooks , AddBooks , UpdateBooks) in the MongoDB.</p>
+<p><strong>Data Flow:</strong> Handles GET and POST requests for book data, interacts with <code>BookModel</code> to fetch or store book information from MongoDB.</p>
 <ul>
     <li>GET /ViewBooks - Retrieve all books</li>
     <li>POST /AddBooks - Add a new book</li>
     <li>POST /UpdateBooks - Update book quantity</li>
 </ul>
 
-<h3>Publishers</h3>
+<h4>GenerateBill.js</h4>
+<p><strong>Purpose:</strong> Manages bill generation of Customer Purchased books by Bill id .</p>
+<p><strong>Data Flow:</strong> Handles POST requests to generate a bill based on purchase books, interacts with <code>PurchaseBook</code> and <code>BookModel</code>.</p>
+<ul>
+    <li>POST /GenerateBill - Generate a bill for a purchased book by customers</li>
+</ul>
+
+<h4>Publisher.js</h4>
+<p><strong>Purpose:</strong> Manages publisher-related operations.(GetPublissher , AddPublisher) in the MongoDB</p>
+<p><strong>Data Flow:</strong> Handles GET and POST requests for publisher data, interacts with <code>PublisherModel</code> to fetch or store publisher information.</p>
 <ul>
     <li>GET /getPublisers - Retrieve all publishers</li>
     <li>POST /Publisers - Add a new publisher</li>
 </ul>
 
-<h3>Purchase Books</h3>
+<h4>PurchaseBook.js</h4>
+<p><strong>Purpose:</strong> Manages books purchase by customer.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to record book purchases, interacts with <code>BookModel</code> and <code>PurchaseBook</code> to update inventory and save purchase details.</p>
 <ul>
     <li>POST /PurchaseBooks - Purchase books</li>
 </ul>
 
-<h3>Return Books</h3>
+<h4>ReturnBook.js</h4>
+<p><strong>Purpose:</strong> Manages the return of books Purchased By Customer.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to record book returns, updates <code>PurchaseBook</code> and <code>BookModel</code> to reflect returned books.</p>
 <ul>
     <li>POST /ReturnBooks - Return purchased books</li>
 </ul>
 
-<h3>Generate Bill</h3>
-<ul>
-    <li>POST /GenerateBill - Generate a bill for a purchased book</li>
-</ul>
+<h4>UpdateBook.js</h4>
+<p><strong>Purpose:</strong> Manages updating book information.</p>
+<p><strong>Data Flow:</strong> Handles POST requests to update book details, interacts with <code>BookModel</code> to update inventory.</p>
 
-<h2>Models</h2>
+<h2>Models Files</h2>
+
 <p>The models define the schema for the MongoDB collections used in this project.</p>
 <h4>BooksModel.js</h4>
     <p><strong>Purpose:</strong> Defines the schema for storing book data in MongoDB.</p>
     <p><strong>Schema:</strong> Includes fields like Name, Grade, Quantity, PurchaseRate, SellRate, TotalQuantity, PublisherId.</p>
-    <h4>PublisherModel.js</h4>
+<h4>PublisherModel.js</h4>
     <p><strong>Purpose:</strong> Defines the schema for storing publisher data in MongoDB.</p>
     <p><strong>Schema:</strong> Includes fields like PublisherName and PublisherCell.</p>
-    <h4>PurchaseBookModel.js</h4>
+<h4>PurchaseBookModel.js</h4>
     <p><strong>Purpose:</strong> Defines the schema for storing purchase transactions in MongoDB.</p>
     <p><strong>Schema:</strong> Includes fields like parentName, studentName, bookId, and bookQuantity.</p>
-<h3>BookModel.js</h3>
-<pre><code>
-import mongoose from 'mongoose'
-export default mongoose.model("Books", mongoose.Schema(
-    {
-        Name: String,
-        Grade: String,
-        Quantity: String,
-        PurchaseRate: String,
-        SellRate: String,
-        TotalQuantity: String,
-        PublisherId: String
-    }
-));
-</code></pre>
-
-<h3>PublisherModel.js</h3>
-<pre><code>
-import mongoose from 'mongoose'
-export default mongoose.model("publisher", mongoose.Schema(
-    {
-        PubisherName: String,
-        PublisherCell: String
-    }
-));
-</code></pre>
-
-<h3>PurchaseBookModel.js</h3>
-<pre><code>
-import mongoose from 'mongoose'
-export default mongoose.model("Purchasing", mongoose.Schema(
-    {
-        parentName: String,
-        studentName: String,
-        bookId: String,
-        bookQuantity: String
-    }
-));
-</code></pre>
 
 <h2>How to Use</h2>
 <ol>
